@@ -21,7 +21,6 @@ export class Modal {
   }
 
   hide () {
-    debugger
     document.body.removeChild(this.modal);
     document.body.removeChild(this.backdrop);
     this.modal = null;
