@@ -46,7 +46,8 @@ export default (long, lat, map = null) => {
 
   if( map ) {
     map.getView().setCenter(fromLonLat([long, lat]));
-    map.getView().setZoom(16);
+    map.getView().setZoom(16
+      );
     map.addLayer(vectorLayer);
   }
   else {

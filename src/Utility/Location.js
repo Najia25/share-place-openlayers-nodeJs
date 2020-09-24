@@ -5,7 +5,9 @@ export async function getCoordsFromAddress(address) {
     throw new Error('Failed to fetch coordinates. Please try again!');
   }
   const data = await response.json();
+  console.log(data);
   return {
+    address: data[0].display_name,
     lat: data[0].lat,
     long: data[0].lon
   };

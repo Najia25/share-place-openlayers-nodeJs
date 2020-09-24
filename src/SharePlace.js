@@ -9,7 +9,22 @@ class PlaceFinder {
     this.shareBtn = document.getElementById('share-btn');
     locateUserBtn.addEventListener('click', this.locareUserHandler.bind(this)); // this here refers to the object created with this constructor
     addressForm.addEventListener('submit', this.findAddressHandler.bind(this));
-    // this.shareBtn.addEventListener('click');
+    this.shareBtn.addEventListener('click', this.sharePlaceHandler);
+  }
+
+  async sharePlaceHandler () {
+    const sharedLinkInputElement = document.getElementById('share-link');
+    if (!navigator.clipboard) {
+      sharedLinkInputElement.select();
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(sharedLinkInputElement.value);
+      alert('Link copied to clipboard!')
+    } catch (err) {
+      console.log(err);
+      sharedLinkInputElement.select();
+    }
   }
 
   selectPlace(coordinates, address ) {
@@ -42,7 +57,6 @@ class PlaceFinder {
         const address = await getAddressFromCoords(coordinates);
         modal.hide();
         this.selectPlace(coordinates, address);
-        // console.log(coordinates);
       },
       error => {
         modal.hide();
@@ -64,9 +78,9 @@ class PlaceFinder {
       coordinates.long = parseFloat(coordinates.long);
       coordinates.lat = parseFloat(coordinates.lat);
       console.log(coordinates);
-      this.selectPlace(coordinates, address);
+      this.selectPlace(coordinates, coordinates.address);
     } catch (err) {
-      alert('Could not locate you! Please type in a valid address');
+      alert('Could not find the location! Please type in a valid address');
     }
     modal.hide();
   }
